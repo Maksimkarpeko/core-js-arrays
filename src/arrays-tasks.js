@@ -494,8 +494,8 @@ function getMaxItems(arr, n) {
  *    findCommonElements(['a', 'b', 'c'], ['b', 'c', 'd']) => [ 'b', 'c' ]
  *    findCommonElements([1, 2, 3], ['a', 'b', 'c']) => []
  */
-function findCommonElements(/* arr1, arr2 */) {
-  throw new Error('Not implemented');
+function findCommonElements(arr1, arr2) {
+  return arr1.filter((element) => arr2.includes(element));
 }
 
 /**
@@ -509,8 +509,20 @@ function findCommonElements(/* arr1, arr2 */) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => longest is [3, 10] and [1, 20] => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => longest is [7, 40, 80] => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  if (nums.length === 0) return 0;
+
+  return nums.slice(1).reduce(
+    (state, num) => {
+      const { maxLen, currLen, prev } = state;
+
+      const newCurrLen = num > prev ? currLen + 1 : 1;
+      const newMaxLen = Math.max(maxLen, newCurrLen);
+
+      return { maxLen: newMaxLen, currLen: newCurrLen, prev: num };
+    },
+    { maxLen: 1, currLen: 1, prev: nums[0] }
+  ).maxLen;
 }
 
 /**
